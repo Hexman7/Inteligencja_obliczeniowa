@@ -5,6 +5,7 @@ from enum import Enum
 import numpy as np
 import evaluation_functions as evf
 import individual as ind
+import draw_functions as df
 
 
 class SomeClass:
@@ -86,10 +87,17 @@ class SomeClass:
                 test.append(self.selection(individual, crossbreed_ind, EvaluationType.MINIMUM))
             cur_iter += 1
             self.population = copy.deepcopy(test)
-            input = ''
+
+            if cur_iter == self.iterations / 2:
+                self.f = self.f / 2
+            # DEBUG
+            print('\n \n pop:')
             for el in self.population:
                 print(el)
-            print('pop:', input)
+            # DEBUG
+            if cur_iter % 50 == 0:
+                df.draw_styblinski_tang(self.population)
+
 
 
 class EvaluationType(Enum):
