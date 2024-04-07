@@ -86,7 +86,7 @@ class SomeClass:
                 crossbreed_ind = self.crossbreed(individual, temp_ind)
                 test.append(self.selection(individual, crossbreed_ind, EvaluationType.MINIMUM))
             cur_iter += 1
-            self.population = copy.deepcopy(test)
+            self.population = test #copy.deepcopy(test)
 
             if cur_iter == self.iterations / 2:
                 self.f = self.f / 2
@@ -95,8 +95,8 @@ class SomeClass:
             for el in self.population:
                 print(el)
             # DEBUG
-            if cur_iter % 50 == 0:
-                df.draw_styblinski_tang(self.population)
+            if cur_iter % 10 == 0:
+                df.draw_rastrigin(self.population)
 
 
 
