@@ -19,7 +19,7 @@ rosenbrok_obj = sc.SomeClass(0.7, 0.5, 2, 75, 10, -10, 500, evfu.rosenbrock)
 #rosenbrok_obj.run_algorithm()
 
 rastrigin_obj = sc.SomeClass(0.6, 0.5, 2, 100, 5.12, -5.12, 10000, evfu.rastrigin)
-rastrigin_obj.run_algorithm()
+#rastrigin_obj.run_algorithm()
 
 
 #Zakharov - po 1000 iteracji algorytm wskazuje wartość oceny:0.0 ale wartości wektora poszczególnych osobników nie są równe 0.0 np.
