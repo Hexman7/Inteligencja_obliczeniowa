@@ -37,7 +37,7 @@ class SomeClass:
         for i in range(self.pop_size):
             temp = []
             for j in range(self.dimensions):
-                temp.append(rn.uniform(self.min_val, self.max_val))
+                temp.append(np.float64(rn.uniform(self.min_val, self.max_val)))
 
             population.append(ind.Individual(np.array(temp), self.function(temp)))
 
@@ -45,8 +45,8 @@ class SomeClass:
 
     def mutate(self, i1, i2, i3):
         temp_individual_vector = i1.vector + (self.f * (i2.vector - i3.vector))
-        print('i1: {}+, f: {}* i2:{}-, i3:{} = {}'.format(i1.vector, self.f, i2.vector, i3.vector,
-                                                          temp_individual_vector))
+        # print('i1: {}+, f: {}* i2:{}-, i3:{} = {}'.format(i1.vector, self.f, i2.vector, i3.vector,
+        # temp_individual_vector))
         temp_individual = ind.Individual(temp_individual_vector, self.function(temp_individual_vector))
         return temp_individual
 
@@ -81,12 +81,12 @@ class SomeClass:
         while cur_iter < self.iterations:
             test = []
             for individual in self.population:
-                individuals = rn.choices(self.population, k=3)
-                temp_ind = self.mutate(individuals[0], individuals[1], individuals[2])
+                individuals = rn.choices(self.population, k=2)
+                temp_ind = self.mutate(individual, individuals[0], individuals[1])
                 crossbreed_ind = self.crossbreed(individual, temp_ind)
                 test.append(self.selection(individual, crossbreed_ind, EvaluationType.MINIMUM))
             cur_iter += 1
-            self.population = test #copy.deepcopy(test)
+            self.population = test  # copy.deepcopy(test)
 
             if cur_iter == self.iterations / 2:
                 self.f = self.f / 2
@@ -95,9 +95,8 @@ class SomeClass:
             for el in self.population:
                 print(el)
             # DEBUG
-            if cur_iter % 10 == 0:
-                df.draw_rastrigin(self.population)
-
+            if cur_iter % 100 == 0:
+                df.draw_func(self.population)
 
 
 class EvaluationType(Enum):

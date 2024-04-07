@@ -16,18 +16,15 @@ def draw_func(population):
     F = f(x1, x2)
     # plt.contour(X1, X2, f(X1, X2))
 
-    E = 45
-    A = 45
-
     fig = plt.figure(figsize=[12, 8])
     ax = plt.axes(projection='3d')
     ax.plot_surface(X1, X2, f(X1, X2), cmap='jet', alpha=0.5)
     # ax.plot_wireframe(X1, X2, f(X1, X2), rcount=15, ccount=15)
-    # ax.view_init(elev=E, azim=A)
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('f(X, Y)')
     # ax.contourf(x1, x2, f(X1, X2))
+    ax.view_init(70, -60)
     for el in population:
         ax.scatter3D(el.vector[0], el.vector[1], el.evaluation_value, color="red")
     plt.show()
@@ -87,6 +84,7 @@ def draw_styblinski_tang(population):
     x, y = np.meshgrid(x, y)
     z = 0.5 * ((x ** 4 + y ** 4) - 16 * (x ** 2 + y ** 2) + 5 * (x + y))
     surface = ax.plot_surface(x, y, z, cmap='gist_earth', alpha=0.5)
+    ax.view_init(50, -80)
     for el in population:
         ax.scatter3D(el.vector[0], el.vector[1], el.evaluation_value, color="red")
     plt.show()
