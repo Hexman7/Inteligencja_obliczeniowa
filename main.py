@@ -15,8 +15,8 @@ import some_class as sc
 # współczynnik CR - decyduje, który element genotypu przechodzi dalej, czy od przodka czy od nowego osobnika
 #
 
-rosenbrok_obj = sc.SomeClass(0.7, 0.5, 2, 100, 6, -6, 2500, evfu.rosenbrock)
-rosenbrok_obj.run_algorithm()
+rosenbrok_obj = sc.SomeClass(0.7, 0.5, 2, 100, 2.048, -2.048, 2500, evfu.rosenbrock)
+#rosenbrok_obj.run_algorithm()
 
 
 # wartośc oceny 0 a genotypów bliskie zero...
@@ -27,12 +27,12 @@ rastrigin_obj = sc.SomeClass(0.6, 0.5, 2, 100, 5.12, -5.12, 10000, evfu.rastrigi
 # są równe 0.0 np. Vector: [ 3.96196569e-163 -9.04600923e-163]  Evaluation_value: 0.0
 
 zakharov_obj = sc.SomeClass(0.4, 0.5, 2, 100, 10, -10, 4000, evfu.zakharov)
-# zakharov_obj.run_algorithm()
+#zakharov_obj.run_algorithm()
 
 
 # styblinski tang
 styblinski_tang_obj = sc.SomeClass(0.5, 0.2, 2, 100, 5, -5, 2000, evfu.styblinski_tang)
-# styblinski_tang_obj.run_algorithm()
+styblinski_tang_obj.run_algorithm()
 
 # f = 0.7
 # cr = 0.5

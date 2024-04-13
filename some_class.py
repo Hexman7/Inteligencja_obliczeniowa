@@ -96,7 +96,7 @@ class SomeClass:
                 print(el)
             # DEBUG
             if cur_iter % 100 == 0:
-                df.draw_func(self.population)
+                df.draw_styblinski_tang(self.population)
 
 
 class EvaluationType(Enum):

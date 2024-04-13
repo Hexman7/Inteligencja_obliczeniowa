@@ -1,5 +1,7 @@
 import math
 import numpy
+from individual import Individual
+
 
 def rosenbrock(individual):  # minimum szukamy
     result = numpy.float64(0)
@@ -23,7 +25,7 @@ def rastrigin(individual):
     temp = numpy.float64(0)
     for i in range(len(individual)):  # len(individual) = dimensions
         temp += individual[i] ** 2 - 10 * math.cos(2 * math.pi * individual[i])
-    return numpy.float64(10 * len(individual) + temp) # len(individual) = dimensions
+    return numpy.float64(10 * len(individual) + temp)  # len(individual) = dimensions
 
 
 def styblinski_tang(individual):
