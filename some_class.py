@@ -32,19 +32,32 @@ class SomeClass:
     #
     #     return population
 
-    def create_population(self):
+    def create_population(self):        ## TODO: sprawdzenie czy wylosowany punk nie jest optimum
         population = []
         for i in range(self.pop_size):
             temp = []
             for j in range(self.dimensions):
-                temp.append(np.float64(rn.uniform(self.min_val, self.max_val)))
+                temp.append(np.float64(rn.uniform(self.min_val, self.max_val))) ### TODO dorobić aby się mieściło w obu przedziałach i dla x1 i dla x2
 
             population.append(ind.Individual(np.array(temp), self.function(temp)))
 
         return population
 
     def mutate(self, i1, i2, i3):
-        temp_individual_vector = i1.vector + (self.f * (i2.vector - i3.vector))
+        sub = i2.vector - i3.vector
+        ## TO DO weryfikacja
+        for i in sub:
+            if i > self.max_val:
+                i = self.max_val
+
+            if i < self.min_val:
+                i = self.min_val
+
+
+        ## TODO: weryfikować czy po odejmowaniu nie wyjdzie poza maximum/minimum
+        temp_individual_vector = i1.vector + (self.f * sub)
+        ## TODO: weryfikować czy nie wyjdzie poza wykres po dodaniu również
+
         # print('i1: {}+, f: {}* i2:{}-, i3:{} = {}'.format(i1.vector, self.f, i2.vector, i3.vector,
         # temp_individual_vector))
         temp_individual = ind.Individual(temp_individual_vector, self.function(temp_individual_vector))
@@ -81,8 +94,8 @@ class SomeClass:
         while cur_iter < self.iterations:
             test = []
             for individual in self.population:
-                individuals = rn.choices(self.population, k=2)
-                temp_ind = self.mutate(individual, individuals[0], individuals[1])
+                individuals = rn.choices(self.population, k=3)
+                temp_ind = self.mutate(individuals[0], individuals[1], individuals[2])
                 crossbreed_ind = self.crossbreed(individual, temp_ind)
                 test.append(self.selection(individual, crossbreed_ind, EvaluationType.MINIMUM))
             cur_iter += 1
@@ -95,8 +108,8 @@ class SomeClass:
             for el in self.population:
                 print(el)
             # DEBUG
-            if cur_iter % 100 == 0:
-                df.draw_styblinski_tang(self.population)
+            #if cur_iter % 100 == 0:
+            df.draw_styblinski_tang(self.population)
 
 
 class EvaluationType(Enum):
