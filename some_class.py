@@ -35,20 +35,10 @@ class SomeClass:
 
     def mutate(self, i1, i2, i3):
         sub = i2.vector - i3.vector
-        for index, el in enumerate(sub):
-            if el > self.max_val:
-                # print(f"i was bigger than max_val: {el}") #DEBUG
-                sub[index] = self.max_val
-                # print(f"i is: {sub[index]}") #DEBUG
-
-            if el < self.min_val:
-                # print(f"i was smaller than min_val: {el}") #DEBUG
-                sub[index] = self.min_val
-                # print(f"i is: {sub[index]}")    #DEBUG
-        # print(f"sub: {sub}") #DEBUG
+        self.check_values(sub) # weryfikacja czy wartości nie wychodzą poza zakres
 
         temp_individual_vector = i1.vector + (self.f * sub)
-        ## TODO: weryfikować czy nie wyjdzie poza wykres po dodaniu również
+        self.check_values(temp_individual_vector)   # weryfikacja czy wartości nie wychodzą poza zakres
 
         # print('i1: {}+, f: {}* i2:{}-, i3:{} = {}'.format(i1.vector, self.f, i2.vector, i3.vector,
         # temp_individual_vector))
@@ -70,12 +60,12 @@ class SomeClass:
         rating_indiv = indiv.evaluation_value
         rating_crossbreed_in = crossbreed_in.evaluation_value
         if eval_type == EvaluationType.MINIMUM:
-            if rating_crossbreed_in <= rating_indiv:
+            if rating_crossbreed_in < rating_indiv:
                 return crossbreed_in
             else:
                 return indiv
         else:
-            if rating_crossbreed_in >= rating_indiv:
+            if rating_crossbreed_in > rating_indiv:
                 return crossbreed_in
             else:
                 return indiv
@@ -100,8 +90,21 @@ class SomeClass:
             for el in self.population:
                 print(el)
             # DEBUG
-            # if cur_iter % 100 == 0:
-            df.draw_styblinski_tang(self.population)
+            if cur_iter % 10 == 0:
+                df.draw_styblinski_tang(self.population)
+
+    def check_values(self, vector):
+        for index, el in enumerate(vector):
+            if el > self.max_val:
+                # print(f"i was bigger than max_val: {el}")  # DEBUG
+                vector[index] = np.float64(self.max_val)
+                # print(f"i is: {vector[index]}")  # DEBUG
+
+            if el < self.min_val:
+                # print(f"i was smaller than min_val: {el}")  # DEBUG
+                vector[index] = np.float64(self.min_val)
+                # print(f"i is: {vector[index]}")  # DEBUG
+        # print(f"sub: {vector}")  # DEBUG
 
 
 class EvaluationType(Enum):

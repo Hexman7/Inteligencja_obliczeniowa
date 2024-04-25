@@ -31,7 +31,7 @@ zakharov_obj = sc.SomeClass(0.4, 0.5, 2, 100, 10, -10, 4000, evfu.zakharov)
 
 
 # styblinski tang
-styblinski_tang_obj = sc.SomeClass(0.5, 0.5, 2, 100, 5, -5, 1, evfu.styblinski_tang)
+styblinski_tang_obj = sc.SomeClass(0.5, 0.5, 2, 100, 5, -5, 500, evfu.styblinski_tang)
 styblinski_tang_obj.run_algorithm()
 
 # f = 0.7
