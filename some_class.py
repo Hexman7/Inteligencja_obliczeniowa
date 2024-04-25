@@ -21,23 +21,13 @@ class SomeClass:
         self.function = function
         self.population = self.create_population()
 
-    # def create_population(self):
-    #     population = []
-    #     for i in range(self.pop_size):
-    #         temp = []
-    #         for j in range(self.dimensions):
-    #             temp.append(rn.uniform(self.min_val, self.max_val))
-    #
-    #         population.append(np.array(temp))
-    #
-    #     return population
-
-    def create_population(self):        ## TODO: sprawdzenie czy wylosowany punk nie jest optimum
+    def create_population(self):  ## TODO: sprawdzenie czy wylosowany punk nie jest optimum
         population = []
         for i in range(self.pop_size):
             temp = []
             for j in range(self.dimensions):
-                temp.append(np.float64(rn.uniform(self.min_val, self.max_val))) ### TODO dorobić aby się mieściło w obu przedziałach i dla x1 i dla x2
+                temp.append(np.float64(rn.uniform(self.min_val,
+                                                  self.max_val)))  ### TODO dorobić aby się mieściło w obu przedziałach i dla x1 i dla x2
 
             population.append(ind.Individual(np.array(temp), self.function(temp)))
 
@@ -45,16 +35,18 @@ class SomeClass:
 
     def mutate(self, i1, i2, i3):
         sub = i2.vector - i3.vector
-        ## TO DO weryfikacja
-        for i in sub:
-            if i > self.max_val:
-                i = self.max_val
+        for index, el in enumerate(sub):
+            if el > self.max_val:
+                # print(f"i was bigger than max_val: {el}") #DEBUG
+                sub[index] = self.max_val
+                # print(f"i is: {sub[index]}") #DEBUG
 
-            if i < self.min_val:
-                i = self.min_val
+            if el < self.min_val:
+                # print(f"i was smaller than min_val: {el}") #DEBUG
+                sub[index] = self.min_val
+                # print(f"i is: {sub[index]}")    #DEBUG
+        # print(f"sub: {sub}") #DEBUG
 
-
-        ## TODO: weryfikować czy po odejmowaniu nie wyjdzie poza maximum/minimum
         temp_individual_vector = i1.vector + (self.f * sub)
         ## TODO: weryfikować czy nie wyjdzie poza wykres po dodaniu również
 
@@ -108,7 +100,7 @@ class SomeClass:
             for el in self.population:
                 print(el)
             # DEBUG
-            #if cur_iter % 100 == 0:
+            # if cur_iter % 100 == 0:
             df.draw_styblinski_tang(self.population)
 
 
