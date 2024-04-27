@@ -27,7 +27,7 @@ class SomeClass:
             temp = []
             for j in range(self.dimensions):
                 temp.append(np.float64(rn.uniform(self.min_val,
-                                                  self.max_val)))  ### TODO dorobić aby się mieściło w obu przedziałach i dla x1 i dla x2
+                                                  self.max_val)))
 
             population.append(ind.Individual(np.array(temp), self.function(temp)))
 
@@ -90,8 +90,8 @@ class SomeClass:
             for el in self.population:
                 print(el)
             # DEBUG
-            if cur_iter % 10 == 0:
-                df.draw_styblinski_tang(self.population)
+            if cur_iter % 1000 == 0:
+                df.draw_func(self.population)
 
     def check_values(self, vector):
         for index, el in enumerate(vector):
