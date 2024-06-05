@@ -1,3 +1,5 @@
+import time
+
 from mpl_toolkits import mplot3d
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,7 +11,7 @@ def f(x1, x2):
     return 100 * (x2 - x1 ** 2) ** 2 + (x1 - 1) ** 2
 
 
-def draw_func(population):
+def draw_rosenbrock(population):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     x1 = np.linspace(-2.048, 2.048)
@@ -23,7 +25,7 @@ def draw_func(population):
 
     ax.view_init(70, -60)
     for el in population:
-        ax.scatter3D(el.vector[0], el.vector[1],el.evaluation_value, color="red")
+        ax.scatter3D(el.vector[0], el.vector[1], el.evaluation_value, color="red")
     plt.show()
 
 

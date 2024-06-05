@@ -3,9 +3,11 @@ import random as rn
 from enum import Enum
 
 import numpy as np
-import evaluation_functions as evf
+import pickle
+
 import individual as ind
 import draw_functions as df
+import evaluation_functions as evfu
 
 
 class SomeClass:
@@ -20,6 +22,15 @@ class SomeClass:
         self.iterations = iterations
         self.function = function
         self.population = self.create_population()
+
+        if self.function == evfu.rosenbrock:
+            self.draw_function = df.draw_rosenbrock
+        if self.function == evfu.rastrigin:
+            self.draw_function = df.draw_rastrigin
+        if self.function == evfu.zakharov:
+            self.draw_function = df.draw_zakharov
+        if self.function == evfu.styblinski_tang:
+            self.draw_function = df.draw_styblinski_tang
 
     def create_population(self):  ## TODO: sprawdzenie czy wylosowany punk nie jest optimum
         population = []
@@ -72,6 +83,12 @@ class SomeClass:
 
     def run_algorithm(self):
         cur_iter = 0
+        with open('pop.pkl', 'wb+') as out_file:
+            out_file.truncate()
+
+        pop_dict = {"populations": [],
+                    "scores": []}
+
 
         while cur_iter < self.iterations:
             test = []
@@ -87,11 +104,31 @@ class SomeClass:
                 self.f = self.f / 2
             # DEBUG
             print('\n \n pop:')
+
+            the_best_val = 1000000
+            the_worst_val = 0
+            the_worst_indiv = None
+            the_best_indiv = None
+
+
+            #dorobić średnie rozwiązanie
+
             for el in self.population:
+                if el.evaluation_value > the_worst_val:
+                    the_worst_indiv = el
+                if el.evaluation_value < the_best_val:
+                    the_best_indiv = el
                 print(el)
             # DEBUG
-            if cur_iter % 1000 == 0:
-                df.draw_func(self.population)
+            if cur_iter % 10090 == 0:
+                self.draw_function(self.population)
+
+            pop_dict['populations'].append(self.population)
+            pop_dict['scores'].append({"the_best": the_best_indiv, "the_worst": the_worst_indiv})
+
+        with open('pop.pkl', 'ab') as out_file:
+            print("saving: {}".format(pop_dict))
+            pickle.dump(pop_dict, out_file)
 
 
     def check_values(self, vector):

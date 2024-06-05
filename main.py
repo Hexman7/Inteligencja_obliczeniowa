@@ -15,7 +15,7 @@ import some_class as sc
 # współczynnik CR - decyduje, który element genotypu przechodzi dalej, czy od przodka czy od nowego osobnika
 #
 
-rosenbrok_obj = sc.SomeClass(0.7, 0.5, 2, 100, 2.048, -2.048, 2500, evfu.rosenbrock)
+rosenbrok_obj = sc.SomeClass(0.7, 0.5, 2, 100, 2.048, -2.048, 300, evfu.rosenbrock)
 rosenbrok_obj.run_algorithm()
 
 
@@ -35,11 +35,5 @@ zakharov_obj = sc.SomeClass(0.4, 0.5, 2, 100, 10, -10, 4000, evfu.zakharov)
 styblinski_tang_obj = sc.SomeClass(0.5, 0.5, 2, 100, 5, -5, 500, evfu.styblinski_tang)
 #styblinski_tang_obj.run_algorithm()
 
-# f = 0.7
-# cr = 0.5
-# dimensions = 12
-# population = 75
-# pop = evalf.create_population(dimensions, -5, 10, population)
-# iterations = 100
-# cur_iter = 0
+
 
