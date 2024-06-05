@@ -91,7 +91,7 @@ class SomeClass:
                 print(el)
             # DEBUG
             if cur_iter % 10 == 0:
-                df.draw_styblinski_tang(self.population)
+                df.draw_rastrigin(self.population)
 
     def check_values(self, vector):
         for index, el in enumerate(vector):
