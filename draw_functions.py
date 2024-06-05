@@ -21,10 +21,6 @@ def draw_func(population):
     ax.set_ylabel('Y')
     ax.set_zlabel('f(X, Y)')
 
-    print(X1)
-    print(X2)
-    print(z)
-
     ax.view_init(70, -60)
     for el in population:
         ax.scatter3D(el.vector[0], el.vector[1],el.evaluation_value, color="red")
