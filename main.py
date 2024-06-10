@@ -18,10 +18,10 @@ dimension = problem.as_name_dict()['dimension']  # sprawdzamy ile punktów jest 
 # print(dimension)
 # DEBUG
 matrix = []
-e_max = 10  # maksymalna epoka
+e_max = 300 # maksymalna epoka
 e = 0  # aktualna epoka
 t = 10000  # temperatura
-iteration = 20
+iteration = 3000
 
 
 # tworzenie matrycy odległości aby nie było potrzeby wyliczania co chwilę tego samego
@@ -60,40 +60,39 @@ def evaluate_func(individual):
 
 
 def create_neighbour(individual, type):
+
     if type == 0:  # zamiana fragmentu na końcu
-        # DEBUG
-        # print("individual:",individual)
-        # DEBUG
-        temp = copy.deepcopy(individual[len(individual) - int(dimension / 20):])
-        # DEBUG
-        # print("przed:", temp)
-        # DEBUG
+        temp = []
+        candi = []
+        number_of_points = 10
+        print(number_of_points)
+        # print("individual:",individual)# DEBUG
+        temp = copy.deepcopy(individual[len(individual) - number_of_points:])
+        # print("przed:", temp)# DEBUG
         temp.reverse()
-        # DEBUG
-        # print("po:   ", temp)
-        # DEBUG
-        candi = copy.deepcopy(individual[:-int(dimension / 20)])
-        # DEBUG
-        # print("przed dodaniem:", candi)
-        # DEBUG
+        # print("po:   ", temp)# DEBUG
+        candi = copy.deepcopy(individual[:-number_of_points])
+        #print("przed dodaniem:", candi)# DEBUG
+        #print("przed dodaniem:", individual)# DEBUG
+
         for el in temp:
             candi.append(el)
-        # DEBUG
-        # print("po dodaniu:    ", candi)
-        # print("individual:    ", individual)
-        # DEBUG
+        # print("po dodaniu:    ", candi)# DEBUG
+        # print("individual:    ", individual)# DEBUG
     elif type == 1:  # zamiana fragmentu w losowym miejscu
         ran = rn.randint(0, len(individual) - 1)
         number_of_points = 10
         candi = copy.deepcopy(individual)
         print("before: ", candi)  # DEBUG
-        if ran + number_of_points > len(candi) - 1:
-            the_rest = - ((len(candi) - 1) - (ran + number_of_points))
+        if ran + int(number_of_points) > len(candi) - 1:
+            the_rest = - ((len(candi) - 1) - (ran + int(number_of_points)))
             temp = []
             print("temp:        ", temp)# DEBUG
-            for m in candi[ran:]:
+            first_part = copy.deepcopy(candi[ran:])
+            for m in first_part:
                 temp.append(m)
-            for j in candi[:the_rest]:
+            second_part = copy.deepcopy(candi[:the_rest])
+            for j in second_part:
                 temp.append(j)
             print("befo reverse :", temp)# DEBUG
             temp.reverse()
@@ -101,21 +100,28 @@ def create_neighbour(individual, type):
             for k in range(len(temp)):
                 # print(k)# DEBUG
                 if ran + k > len(candi) - 1:
-                    candi[((len(candi) - 1) - (ran + k))] = temp[k]
+                    candi[-((len(candi) - 1) - (ran + k))] = temp[k]
                 else:
                     candi[ran + k] = temp[k]
             print("changed at the end")
         else:
             temp = copy.deepcopy(individual[ran:ran + int(number_of_points)])
             temp.reverse()
+            print(temp)
             index = 0
             for n in range(ran, ran + int(number_of_points)):
+                #print(hex(id(temp[index])))
+                #print('temp',temp[index])
                 candi[n] = temp[index]
+                #print(hex(id(candi[n])))
+                #print('temp', candi[n])
+
+                #print('temp after candi change', temp[index])
                 index += 1
 
         print("after:  ", candi)  # DEBUG
     else:
-        candi = generate_individual()
+        candi = copy.deepcopy(generate_individual())
 
     return candi
 
@@ -130,11 +136,11 @@ indiv = generate_individual()
 while e < e_max:
     i = 0
     while i < iteration:
-
+        candidate = []
         r = rn.uniform(0, 1)
-        if r < 0.00:
+        if r < 0.40:
             candidate = create_neighbour(indiv, 0)
-        elif r < 1:
+        elif r < 0.75:
             candidate = create_neighbour(indiv, 1)
         else:
             candidate = create_neighbour(indiv, 19)
@@ -157,5 +163,5 @@ while e < e_max:
                 t = t * 0.96
             i += 1
         print(indiv_eval_val)
-        print(len(indiv))
+        #print(len(indiv))
     e += 1
